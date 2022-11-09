@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>livecam UI</title>
+    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <style type="text/css">
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            flex-direction: column;
+        }
+
+        #video {
+            height: 600px;
+            border-radius: 20px;
+            padding: 3px;
+            border: 3px solid #00bd03;
+        }
+
+        p {
+            margin-top: 20px;
+            font-family: Arial;
+            display: none;
+        }
+
+        p span {
+            background: #d9d9d9;
+            border-radius: 3px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="feed"><img id="video" src="" /></div>
+<p>Looks like you don't started a webcam server. To start it run <span>npm run start</span> or <span>npm start</span></p>
+<script>
+    const webcam_addr = "127.0.0.1";
+    const webcam_port = "12000";
+    const webcam_host = $(".feed img");
+
+    const error_msg = document.querySelector('p')
+
+    const socket = io('http://' + webcam_addr + ':' + webcam_port);
+
+    socket.on('image', function (data) {
+        webcam_host.attr("src", "data:image/jpeg;base64," + data );
+    });
+
+    socket.on("connect_error", (err) => {
+        error_msg.style.display = 'block'
+    });
+</script>
+</body>
+</html>
