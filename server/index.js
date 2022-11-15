@@ -20,7 +20,7 @@ const webcam_server = new LiveCam
     // callback function called when server starts
     'start' : function() {
         console.log('Webcam server launched, now open index.html file');
-        console.log('this is feature')
+        console.log('This is the feature!')
     },
 });
 
